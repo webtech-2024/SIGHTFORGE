@@ -3,15 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registration Form</title>
+  <title>Insight Forge Registration</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f2f4f7;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: 100vh;
+      padding: 20px;
+    }
+    .welcome-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .welcome-container h1 {
+      color: #333;
+      font-size: 32px;
+    }
+    .welcome-container p {
+      color: #555;
+      font-size: 18px;
+    }
+    .price-image {
+      max-width: 400px;
+      width: 100%;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     .form-container {
       background: #fff;
@@ -64,7 +83,17 @@
     }
   </style>
 </head>
-<body>
+<body> 
+
+  <!-- Welcome Message -->
+  <div class="welcome-container">
+    <h1>Welcome to Insight Forge</h1>
+    <p>Forging Skills, Shaping Futures</p>
+    <img src="{{ url_for('static', filename='course_prices.png') }}" alt="Course Prices" class="price-image">
+
+  </div>
+
+  <!-- Registration Form -->
   <div class="form-container">
     <h2>Course Registration</h2>
     <form id="regForm" method="POST" action="/submit">
@@ -87,10 +116,15 @@
       <label for="course">Select Course</label>
       <select id="course" name="course" required>
         <option value="">-- Select a Course --</option>
-        <option value="Web Development">Web Development</option>
-        <option value="Cybersecurity">Cybersecurity</option>
-        <option value="AI & Machine Learning">AI & Machine Learning</option>
-        <option value="Game Development">Game Development</option>
+        <option value="Excel Full Course">Excel Full Course</option>
+        <option value="Advanced Excel">Advanced Excel</option>
+        <option value="Excel Basic">Excel Basic</option>
+        <option value="Python Basics">Python Basics</option>
+        <option value="Python for Data Analysis">Python for Data Analysis</option>
+        <option value="Powe BI for Data Analysis & Reporting">Powe BI for Data Analysis & Reporting</option>
+        <option value="Tableau for Data Visualization">Tableau for Data Visualization</option>
+        <option value="Building Portfolio Website">Building Portfolio Website</option>
+        <option value="Web Development(frontend)">Web Development(frontend)</option>
       </select>
       <div id="courseError" class="error"></div>
 
@@ -150,9 +184,11 @@
       }
 
       if (!valid) {
-        event.preventDefault(); // Stop form submission
+        event.preventDefault();
       }
     });
   </script>
 </body>
+</html>
+
 </html>

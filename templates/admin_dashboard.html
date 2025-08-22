@@ -66,27 +66,36 @@
   <header>
     <h1>Admin Dashboard</h1>
     <form method="POST" action="{{ url_for('logout') }}">
-  <button class="logout-btn">Logout</button>
-</form>
-
+      <button class="logout-btn">Logout</button>
+    </form>
   </header>
-  
+
   <div class="container">
     <h2>Registered Users</h2>
+    {% if signups %}
     <table>
-      <tr>
-        <th>ID</th>
-        <th>Email</th>
-        <th>Password</th>
-      </tr>
-      {% for user in users %}
-      <tr>
-        <td>{{ loop.index }}</td>
-        <td>{{ user[0] }}</td>
-        <td>{{ user[1] }}</td>
-      </tr>
-      {% endfor %}
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Course</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for signup in signups %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ signup.name }}</td>
+          <td>{{ signup.email }}</td>
+          <td>{{ signup.course }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
+    {% else %}
+      <p>No registrations yet.</p>
+    {% endif %}
   </div>
 </body>
 </html>
