@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      width: 400px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    input:focus, select:focus {
+      border-color: #007BFF;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      background: #007BFF;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Course Registration</h2>
+    <form id="regForm" method="POST" action="/submit">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required minlength="3">
+      <div id="nameError" class="error"></div>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+      <div id="emailError" class="error"></div>
+
+      <label for="whatsapp">WhatsApp Number</label>
+      <input type="tel" id="whatsapp" name="whatsapp" required pattern="^\+?[0-9]{10,15}$" placeholder="+2349012345678">
+      <div id="whatsappError" class="error"></div>
+
+      <label for="country">Country</label>
+      <input type="text" id="country" name="country" required>
+      <div id="countryError" class="error"></div>
+
+      <label for="course">Select Course</label>
+      <select id="course" name="course" required>
+        <option value="">-- Select a Course --</option>
+        <option value="Web Development">Web Development</option>
+        <option value="Cybersecurity">Cybersecurity</option>
+        <option value="AI & Machine Learning">AI & Machine Learning</option>
+        <option value="Game Development">Game Development</option>
+      </select>
+      <div id="courseError" class="error"></div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("regForm").addEventListener("submit", function(event) {
+      let valid = true;
+
+      // Name validation
+      const name = document.getElementById("name").value.trim();
+      if (name.length < 3) {
+        document.getElementById("nameError").textContent = "Name must be at least 3 characters.";
+        valid = false;
+      } else {
+        document.getElementById("nameError").textContent = "";
+      }
+
+      // Email validation
+      const email = document.getElementById("email").value.trim();
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById("emailError").textContent = "Enter a valid email address.";
+        valid = false;
+      } else {
+        document.getElementById("emailError").textContent = "";
+      }
+
+      // WhatsApp validation
+      const whatsapp = document.getElementById("whatsapp").value.trim();
+      const whatsappPattern = /^\+?[0-9]{10,15}$/;
+      if (!whatsappPattern.test(whatsapp)) {
+        document.getElementById("whatsappError").textContent = "Enter a valid WhatsApp number (10-15 digits).";
+        valid = false;
+      } else {
+        document.getElementById("whatsappError").textContent = "";
+      }
+
+      // Country validation
+      const country = document.getElementById("country").value.trim();
+      if (country.length < 2) {
+        document.getElementById("countryError").textContent = "Country name must be at least 2 characters.";
+        valid = false;
+      } else {
+        document.getElementById("countryError").textContent = "";
+      }
+
+      // Course validation
+      const course = document.getElementById("course").value;
+      if (course === "") {
+        document.getElementById("courseError").textContent = "Please select a course.";
+        valid = false;
+      } else {
+        document.getElementById("courseError").textContent = "";
+      }
+
+      if (!valid) {
+        event.preventDefault(); // Stop form submission
+      }
+    });
+  </script>
+</body>
+</html>
