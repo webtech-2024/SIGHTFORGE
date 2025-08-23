@@ -11,43 +11,53 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
+      padding: 15px;
+      margin: 0;
     }
+
+    /* Welcome Section */
     .welcome-container {
       text-align: center;
       margin-bottom: 20px;
+      padding: 10px;
     }
     .welcome-container h1 {
       color: #333;
-      font-size: 32px;
+      font-size: 2rem;
+      margin: 10px 0;
     }
     .welcome-container p {
       color: #555;
-      font-size: 18px;
+      font-size: 1.1rem;
     }
     .price-image {
-      max-width: 400px;
+      max-width: 450px;
       width: 100%;
-      margin: 15px 0;
+      margin: 15px auto;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+
+    /* Form Container */
     .form-container {
       background: #fff;
-      padding: 25px;
+      padding: 20px;
       border-radius: 12px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-      width: 400px;
+      width: 100%;
+      max-width: 420px;
     }
     h2 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       color: #333;
+      font-size: 1.4rem;
     }
     label {
       font-weight: bold;
       display: block;
-      margin-top: 10px;
+      margin-top: 12px;
+      font-size: 0.9rem;
     }
     input, select {
       width: 100%;
@@ -56,6 +66,7 @@
       border: 1px solid #ccc;
       border-radius: 6px;
       outline: none;
+      font-size: 0.95rem;
       transition: border-color 0.3s;
     }
     input:focus, select:focus {
@@ -69,17 +80,37 @@
       border-radius: 6px;
       background: #007BFF;
       color: #fff;
-      font-size: 16px;
+      font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
-      transition: 0.3s;
+      transition: background 0.3s;
     }
     button:hover {
       background: #0056b3;
     }
     .error {
       color: red;
-      font-size: 13px;
-      margin-top: 5px;
+      font-size: 0.8rem;
+      margin-top: 3px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .welcome-container h1 {
+        font-size: 1.6rem;
+      }
+      .welcome-container p {
+        font-size: 1rem;
+      }
+      .form-container {
+        padding: 15px;
+      }
+      h2 {
+        font-size: 1.2rem;
+      }
+      input, select, button {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -90,7 +121,6 @@
     <h1>Welcome to Insight Forge</h1>
     <p>Forging Skills, Shaping Futures</p>
     <img src="{{ url_for('static', filename='course_prices.png') }}" alt="Course Prices" class="price-image">
-
   </div>
 
   <!-- Registration Form -->
@@ -121,10 +151,10 @@
         <option value="Excel Basic">Excel Basic</option>
         <option value="Python Basics">Python Basics</option>
         <option value="Python for Data Analysis">Python for Data Analysis</option>
-        <option value="Powe BI for Data Analysis & Reporting">Powe BI for Data Analysis & Reporting</option>
+        <option value="Power BI for Data Analysis & Reporting">Power BI for Data Analysis & Reporting</option>
         <option value="Tableau for Data Visualization">Tableau for Data Visualization</option>
         <option value="Building Portfolio Website">Building Portfolio Website</option>
-        <option value="Web Development(frontend)">Web Development(frontend)</option>
+        <option value="Web Development (Frontend)">Web Development (Frontend)</option>
       </select>
       <div id="courseError" class="error"></div>
 
@@ -132,6 +162,7 @@
     </form>
   </div>
 
+  <!-- Client-side validation -->
   <script>
     document.getElementById("regForm").addEventListener("submit", function(event) {
       let valid = true;
@@ -147,7 +178,7 @@
 
       // Email validation
       const email = document.getElementById("email").value.trim();
-      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
       if (!emailPattern.test(email)) {
         document.getElementById("emailError").textContent = "Enter a valid email address.";
         valid = false;
@@ -189,6 +220,4 @@
     });
   </script>
 </body>
-</html>
-
 </html>

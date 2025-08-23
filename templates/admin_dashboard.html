@@ -9,19 +9,25 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       background: #f5f6fa;
+      color: #333;
     }
+
+    /* Header */
     header {
       background: #2a5298;
       color: #fff;
-      padding: 15px 30px;
+      padding: 15px 25px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
+
     header h1 {
       margin: 0;
       font-size: 20px;
     }
+
     .logout-btn {
       background: #e74c3c;
       border: none;
@@ -32,33 +38,94 @@
       font-size: 14px;
       transition: 0.3s;
     }
+
     .logout-btn:hover {
       background: #c0392b;
     }
+
+    /* Container */
     .container {
       padding: 20px;
     }
+
+    h2 {
+      margin-bottom: 15px;
+      font-size: 18px;
+      color: #2a5298;
+    }
+
+    /* Table */
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 15px;
+      margin-top: 10px;
       background: #fff;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     }
+
     table th, table td {
-      padding: 12px;
+      padding: 12px 15px;
       text-align: left;
       border-bottom: 1px solid #eee;
+      font-size: 14px;
     }
+
     table th {
       background: #2a5298;
       color: white;
       font-size: 15px;
     }
+
     table tr:hover {
-      background: #f1f1f1;
+      background: #f9f9f9;
+    }
+
+    /* Empty state */
+    .empty {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      text-align: center;
+      color: #555;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      header h1 {
+        margin-bottom: 10px;
+      }
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      table thead {
+        display: none;
+      }
+      table tr {
+        margin-bottom: 15px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+        padding: 10px;
+      }
+      table td {
+        border: none;
+        padding: 8px 10px;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+      }
+      table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #2a5298;
+      }
     }
   </style>
 </head>
@@ -72,6 +139,7 @@
 
   <div class="container">
     <h2>Registered Users</h2>
+
     {% if signups %}
     <table>
       <thead>
@@ -85,16 +153,18 @@
       <tbody>
         {% for signup in signups %}
         <tr>
-          <td>{{ loop.index }}</td>
-          <td>{{ signup.name }}</td>
-          <td>{{ signup.email }}</td>
-          <td>{{ signup.course }}</td>
+          <td data-label="#"> {{ loop.index }} </td>
+          <td data-label="Name">{{ signup.name }}</td>
+          <td data-label="Email">{{ signup.email }}</td>
+          <td data-label="Course">{{ signup.course }}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
     {% else %}
-      <p>No registrations yet.</p>
+      <div class="empty">
+        <p>No registrations yet.</p>
+      </div>
     {% endif %}
   </div>
 </body>
