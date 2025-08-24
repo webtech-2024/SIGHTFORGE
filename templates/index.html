@@ -22,7 +22,7 @@
       padding: 10px;
     }
     .welcome-container h1 {
-      color: #333;
+      color: #222;
       font-size: 2rem;
       margin: 10px 0;
     }
@@ -135,14 +135,6 @@
       <input type="email" id="email" name="email" required>
       <div id="emailError" class="error"></div>
 
-      <label for="whatsapp">WhatsApp Number</label>
-      <input type="tel" id="whatsapp" name="whatsapp" required pattern="^\+?[0-9]{10,15}$" placeholder="+2349012345678">
-      <div id="whatsappError" class="error"></div>
-
-      <label for="country">Country</label>
-      <input type="text" id="country" name="country" required>
-      <div id="countryError" class="error"></div>
-
       <label for="course">Select Course</label>
       <select id="course" name="course" required>
         <option value="">-- Select a Course --</option>
@@ -184,25 +176,6 @@
         valid = false;
       } else {
         document.getElementById("emailError").textContent = "";
-      }
-
-      // WhatsApp validation
-      const whatsapp = document.getElementById("whatsapp").value.trim();
-      const whatsappPattern = /^\+?[0-9]{10,15}$/;
-      if (!whatsappPattern.test(whatsapp)) {
-        document.getElementById("whatsappError").textContent = "Enter a valid WhatsApp number (10-15 digits).";
-        valid = false;
-      } else {
-        document.getElementById("whatsappError").textContent = "";
-      }
-
-      // Country validation
-      const country = document.getElementById("country").value.trim();
-      if (country.length < 2) {
-        document.getElementById("countryError").textContent = "Country name must be at least 2 characters.";
-        valid = false;
-      } else {
-        document.getElementById("countryError").textContent = "";
       }
 
       // Course validation

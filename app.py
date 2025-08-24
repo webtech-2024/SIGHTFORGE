@@ -1,127 +1,50 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-from functools import wraps
-import sqlite3
-import os
+from flask import Flask, render_template, request, redirect, url_for
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
 
-# Use env var in production; fallback for local dev
-app.secret_key = os.getenv("SECRET_KEY", "super_secret_key")
+# Admin email config
+ADMIN_EMAILS = ["nkosikhonampungose40@gmail.com", "afolayandorcas46@gmail.com"]  # two admin emails
+EMAIL_USER = "Afolayandorcas46@gmail.com"  # the email you send from
+EMAIL_PASS = "cxoj weil kmbr rdik"    # your email password or app password
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
 
-DB_PATH = "signups.db"
-
-# ----------------------
-# Admins (simple demo creds)
-# ----------------------
-ADMINS = {
-    "admin1Mpungose": "passInsightForge2025",
-    "admin2Bukola": "secure456"
-}
-
-# ----------------------
-# Database helpers
-# ----------------------
-def get_conn():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn
-
-def init_db():
-    with get_conn() as conn:
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS signups (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name   TEXT NOT NULL,
-                email  TEXT NOT NULL,
-                course TEXT NOT NULL
-            )
-        """)
-        # optional: improve concurrency on Render
-        conn.execute("PRAGMA journal_mode=WAL;")
-
-def add_signup(name: str, email: str, course: str) -> None:
-    with get_conn() as conn:
-        conn.execute(
-            "INSERT INTO signups (name, email, course) VALUES (?, ?, ?)",
-            (name, email, course)
-        )
-
-def get_all_signups():
-    with get_conn() as conn:
-        rows = conn.execute("SELECT name, email, course FROM signups ORDER BY id DESC").fetchall()
-        # return list of dicts for easy use in Jinja: signup.name, signup.email, signup.course
-        return [dict(row) for row in rows]
-
-# Initialize DB at startup
-init_db()
-
-# ----------------------
-# Auth decorator
-# ----------------------
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if "admin_logged_in" not in session:
-            flash("You must log in as admin first.", "danger")
-            return redirect(url_for("admin_login"))
-        return f(*args, **kwargs)
-    return decorated_function
-
-# ----------------------
-# Routes
-# ----------------------
 @app.route("/")
-def home():
+def index():
     return render_template("index.html")
 
 @app.route("/submit", methods=["POST"])
 def submit():
-    name = request.form.get("name", "").strip()
-    email = request.form.get("email", "").strip()
-    course = request.form.get("course", "").strip()
+    name = request.form["name"]
+    email = request.form["email"]
 
-    if name and email and course:
-        add_signup(name, email, course)
-        return render_template("success.html", name=name)
-    else:
-        flash("Please fill out all fields!", "warning")
-        return redirect(url_for("home"))
+    subject = "New User Submission"
+    body = f"New user submitted info:\n\nName: {name}\nEmail: {email}"
 
-# Admin login page (hidden route)
-@app.route("/secret-admin-login", methods=["GET", "POST"])
-def admin_login():
-    if request.method == "POST":
-        username = request.form.get("username", "").strip()
-        password = request.form.get("password", "").strip()
+    # Send email to multiple admins
+    for admin_email in ADMIN_EMAILS:
+        send_email(admin_email, subject, body)
 
-        if username in ADMINS and ADMINS[username] == password:
-            session["admin_logged_in"] = username
-            flash("Login successful!", "success")
-            return redirect(url_for("admin_dashboard"))
-        else:
-            flash("Invalid credentials!", "danger")
+    return redirect(url_for("success"))
 
-    return render_template("admin_login.html")
+@app.route("/success")
+def success():
+    return render_template("success.html")
 
-# Admin dashboard (hidden route)
-@app.route("/hidden-admin-dashboard")
-@login_required
-def admin_dashboard():
-    signups = get_all_signups()
-    return render_template("admin_dashboard.html", signups=signups)
+def send_email(to_email, subject, body):
+    msg = MIMEMultipart()
+    msg["From"] = EMAIL_USER
+    msg["To"] = to_email
+    msg["Subject"] = subject
+    msg.attach(MIMEText(body, "plain"))
 
-# Admin logout
-@app.route("/logout", methods=["POST"])
-def logout():
-    session.clear()
-    flash("You have been logged out.", "success")
-    return redirect(url_for("admin_login"))
-
-# Optional: health check endpoint for Render
-@app.route("/health")
-def health():
-    return "ok", 200
+    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+        server.starttls()
+        server.login(EMAIL_USER, EMAIL_PASS)
+        server.sendmail(EMAIL_USER, to_email, msg.as_string())
 
 if __name__ == "__main__":
-    # For local dev only; Render will use gunicorn via Procfile
     app.run(debug=True)
