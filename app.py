@@ -20,9 +20,15 @@ def index():
 def submit():
     name = request.form["name"]
     email = request.form["email"]
+    course = request.form["course"]  # ✅ collect course field
 
-    subject = "New User Submission"
-    body = f"New user submitted info:\n\nName: {name}\nEmail: {email}"
+    subject = f"New User Submission - {course}"  # optional: include course in subject
+    body = f"""New user submitted info:
+
+Name: {name}
+Email: {email}
+Course: {course}
+"""
 
     # Send email to multiple admins
     for admin_email in ADMIN_EMAILS:
