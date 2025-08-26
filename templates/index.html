@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -114,7 +114,7 @@
     }
   </style>
 </head>
-<body> 
+<body>
 
   <!-- Welcome Message -->
   <div class="welcome-container">
@@ -168,15 +168,15 @@
       </select>
       <div id="courseError" class="error"></div>
 
-      <label for="source">Where did you hear about us?</label><br>
-    <select id="course" name="source" required>
+      <label for="source">Where did you hear about us?</label>
+      <select id="source" name="source" required>
         <option value="">-- Select --</option>
         <option value="Facebook">Facebook</option>
         <option value="LinkedIn">LinkedIn</option>
         <option value="Instagram">Instagram</option>
         <option value="TikTok">TikTok</option>
-    </select><br>
-      <div id="courseError" class="error"></div>
+      </select>
+      <div id="sourceError" class="error"></div>
 
       <button type="submit">Submit</button>
     </form>
@@ -240,6 +240,15 @@
         valid = false;
       } else {
         document.getElementById("courseError").textContent = "";
+      }
+
+      // Source validation
+      const source = document.getElementById("source").value;
+      if (source === "") {
+        document.getElementById("sourceError").textContent = "Please tell us where you heard about us.";
+        valid = false;
+      } else {
+        document.getElementById("sourceError").textContent = "";
       }
 
       if (!valid) {

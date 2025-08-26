@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+      background: linear-gradient(135deg, #dff9fb, #f6f6f6);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -16,25 +16,32 @@
     }
 
     .box {
-      background: #fff;
+      background: #ffffff;
       padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
       text-align: center;
-      max-width: 400px;
+      max-width: 450px;
+      width: 100%;
       animation: fadeIn 0.8s ease-in-out;
     }
 
     h1 {
-      color: #28a745;
-      font-size: 1.8rem;
+      color: #2ecc71;
+      font-size: 1.9rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      color: #333;
       margin-bottom: 15px;
     }
 
     p {
       color: #555;
       font-size: 1rem;
-      margin-bottom: 25px;
+      margin: 8px 0;
     }
 
     a {
@@ -42,21 +49,22 @@
       text-decoration: none;
       background: #007bff;
       color: white;
-      padding: 12px 25px;
+      padding: 12px 28px;
       border-radius: 8px;
       font-weight: bold;
       font-size: 0.95rem;
+      margin-top: 20px;
       transition: all 0.3s ease;
     }
 
     a:hover {
       background: #0056b3;
       transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
+      from { opacity: 0; transform: translateY(-25px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
@@ -64,11 +72,11 @@
 <body>
   <div class="box">
     <h1>✅ Registration Successful!</h1>
-    <h2>Thank you, {{ name }}!</h2>
-<p>You have successfully registered for <b>{{ course }}</b>.</p>
-<p>We’re glad you found us through <b>{{ source }}</b>!</p>
-    <p>Thank you for registering. Our team will contact you shortly.</p>
-    <a href="/">🏠 Go Back Home</a>
+    <h2>Welcome, <b>{{ name }}</b> 🎉</h2>
+    <p>You’ve successfully registered for <b>{{ course }}</b>.</p>
+    <p>We’re glad you discovered us through <b>{{ source }}</b>!</p>
+    <p>Our team will be in touch with you shortly.</p>
+    <a href="/">🏠 Back to Home</a>
   </div>
 </body>
 </html>
