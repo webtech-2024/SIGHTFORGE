@@ -18,15 +18,25 @@ def index():
 
 @app.route("/submit", methods=["POST"])
 def submit():
+    # Collect form fields
     name = request.form["name"]
     email = request.form["email"]
-    course = request.form["course"]  # ✅ collect course field
+    cellphone = request.form["cellphone"]
+    country = request.form["country"]
+    gender = request.form["gender"]
+    course = request.form["course"]
 
-    subject = f"New User Submission - {course}"  # optional: include course in subject
+    # Subject line includes course
+    subject = f"New User Submission - {course}"
+
+    # Email body with all user details
     body = f"""New user submitted info:
 
 Name: {name}
 Email: {email}
+Cellphone: {cellphone}
+Country: {country}
+Gender: {gender}
 Course: {course}
 """
 

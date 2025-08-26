@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -127,6 +127,7 @@
   <div class="form-container">
     <h2>Course Registration</h2>
     <form id="regForm" method="POST" action="/submit">
+      
       <label for="name">Name</label>
       <input type="text" id="name" name="name" required minlength="3">
       <div id="nameError" class="error"></div>
@@ -134,6 +135,23 @@
       <label for="email">Email</label>
       <input type="email" id="email" name="email" required>
       <div id="emailError" class="error"></div>
+
+      <label for="cellphone">Cellphone Number</label>
+      <input type="tel" id="cellphone" name="cellphone" required pattern="[0-9]{7,15}">
+      <div id="cellphoneError" class="error"></div>
+
+      <label for="country">Country</label>
+      <input type="text" id="country" name="country" required>
+      <div id="countryError" class="error"></div>
+
+      <label for="gender">Gender</label>
+      <select id="gender" name="gender" required>
+        <option value="">-- Select Gender --</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+      <div id="genderError" class="error"></div>
 
       <label for="course">Select Course</label>
       <select id="course" name="course" required>
@@ -176,6 +194,33 @@
         valid = false;
       } else {
         document.getElementById("emailError").textContent = "";
+      }
+
+      // Cellphone validation
+      const phone = document.getElementById("cellphone").value.trim();
+      if (!/^[0-9]{7,15}$/.test(phone)) {
+        document.getElementById("cellphoneError").textContent = "Enter a valid phone number (7-15 digits).";
+        valid = false;
+      } else {
+        document.getElementById("cellphoneError").textContent = "";
+      }
+
+      // Country validation
+      const country = document.getElementById("country").value.trim();
+      if (country.length < 2) {
+        document.getElementById("countryError").textContent = "Please enter a valid country.";
+        valid = false;
+      } else {
+        document.getElementById("countryError").textContent = "";
+      }
+
+      // Gender validation
+      const gender = document.getElementById("gender").value;
+      if (gender === "") {
+        document.getElementById("genderError").textContent = "Please select gender.";
+        valid = false;
+      } else {
+        document.getElementById("genderError").textContent = "";
       }
 
       // Course validation
