@@ -25,6 +25,7 @@ def submit():
     country = request.form["country"]
     gender = request.form["gender"]
     course = request.form["course"]
+    source = request.form["source"]
 
     # Subject line includes course
     subject = f"New User Submission - {course}"
@@ -38,6 +39,7 @@ Cellphone: {cellphone}
 Country: {country}
 Gender: {gender}
 Course: {course}
+Heard about us via: {source}
 """
 
     # Send email to multiple admins
